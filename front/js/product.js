@@ -10,7 +10,6 @@ const price = document.getElementById('price');
 const description = document.getElementById('description');
 const colors = document.getElementById('colors');
 
-
 fetch("http://localhost:3000/api/products/" + New)
     .then(res => res.json())
     .then(product => {
