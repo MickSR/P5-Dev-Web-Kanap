@@ -10,7 +10,7 @@ let imageAlt = "";
 fetch("http://localhost:3000/api/products/")
     .then(res => res.json())
     .then(product => {
-        image[0]
+        image[0].innerHTML =`<img src="${product.imageUrl}" alt=${product.altTxt}">`;
 
     })
     
