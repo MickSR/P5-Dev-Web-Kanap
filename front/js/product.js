@@ -29,4 +29,4 @@ fetch("http://localhost:3000/api/products/" + New)
         console.log("Erreur de la requête API");
     })
  
-//mettre en place l'ajout panier avec les variable
+//mettre en place l'ajout panier
