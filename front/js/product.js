@@ -15,6 +15,8 @@ fetch("http://localhost:3000/api/products/" + New)
     .then(product => {
         //je combines mes variables avec chaque produits
         image[0].innerHTML =`<img src="${product.imageUrl}" alt=${product.altTxt}">`;
+        imageURL = product.imageUrl;
+        imageAlt = product.altTxt;
         title.innerHTML = `<h1>${product.name}</h1>`;
         price.innerHTML = `${product.price}`;
         description.innerHTML = `${product.description}`;
@@ -26,7 +28,7 @@ fetch("http://localhost:3000/api/products/" + New)
     })
 
     .catch((error) => { 
-        console.log("Erreur de la requête API");
+        console.error("Erreur");
     })
 
 //mettre en place l'ajout panier avec les variables
@@ -34,7 +36,7 @@ const selectQuantity = document.getElementById('quantity');
 const selectColors = document.getElementById('colors');
 const addToCart = document.getElementById('addToCart');
 let imageURL = "";
-let imageAlt = "";
+let altTxt = "";
 
 // je configure un eventListener quand l'utilisateur clique sur ajouter au panier
 addToCart.addEventListener('click', (event) => {
@@ -43,7 +45,7 @@ addToCart.addEventListener('click', (event) => {
   const selection = {
     id: New,
     image: imageURL,
-    alt: imageAlt,
+    alt: altTxt,
     name: title.textContent,
     price: price.textContent,
     color: selectColors.value,
@@ -51,36 +53,41 @@ addToCart.addEventListener('click', (event) => {
 
 };
 
+// je met clés+valeurs dans le localStorage
 let productInLocalStorage =  JSON.parse(localStorage.getItem('product'));
 
+//j'ajoute les produits choisis dans le localstorage
 const addProductLocalStorage = () => {
+
+//je récupère le choix du client
 productInLocalStorage.push(selection);
+
+//je récupère les données dans le localStorage
 localStorage.setItem('product', JSON.stringify(productInLocalStorage));
 }
 
 let addConfirm = () => {
-  alert('Le produit a bien été ajouté');
+  alert('Votre produit a bien été ajouté');
 }
 
 let update = false;
 
+//si il y a des produits et verification qu'il n'y a pas déjà les produits
 if (productInLocalStorage) {
- productInLocalStorage.forEach (function (productOk, key) {
-  if (productOk.id == New && productOk.color == selectColors.value) {
-    productInLocalStorage[key].quantity = parseInt(productOk.quantity) + parseInt(selectQuantity.value);
+ productInLocalStorage.forEach (function (productconfirmation, key) {
+  if (productconfirmation.id == New && productconfirmation.color == selectColors.value) {
+    productInLocalStorage[key].quantity = parseInt(productconfirmation.quantity) + parseInt(selectQuantity.value);
     localStorage.setItem('product', JSON.stringify(productInLocalStorage));
     update = true;
     addConfirm();
   }
 });
 
-
   if (!update) {
   addProductLocalStorage();
   addConfirm();
   }
 }
-
 
 else {
   productInLocalStorage = [];

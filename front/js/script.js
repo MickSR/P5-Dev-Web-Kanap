@@ -5,7 +5,7 @@
 
     //message en cas d'erreur serveur
       .catch((error) => { 
-        console.log("Erreur de la requête API");
+        console.error("Erreur de la requête API");
       })
 
     function Products(res) {
