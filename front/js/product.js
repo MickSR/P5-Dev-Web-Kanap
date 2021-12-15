@@ -28,5 +28,31 @@ fetch("http://localhost:3000/api/products/" + New)
     .catch((error) => { 
         console.log("Erreur de la requête API");
     })
- 
-//mettre en place l'ajout panier
+
+//mettre en place l'ajout panier avec les variables
+const selectQuantity = document.getElementById('quantity');
+const selectColors = document.getElementById('colors');
+const addToCart = document.getElementById('addToCart');
+let imageURL = "";
+let imageAlt = "";
+
+// je configure un eventListener quand l'utilisateur clique sur ajouter au panier
+addToCart.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  const selection = {
+    id: New,
+    image: imageURL,
+    alt: imageAlt,
+    name: title.textContent,
+    price: price.textContent,
+    color: selectColors.value,
+    quantity: selectQuantity.value,
+
+  }});
+
+  let productInLocalStorage =  JSON.parse(localStorage.getItem('product'));
+  const addProductLocalStorage = () => {
+  productInLocalStorage.push(selection);
+  localStorage.setItem('product', JSON.stringify(productInLocalStorage));
+  }
