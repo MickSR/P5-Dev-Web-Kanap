@@ -61,9 +61,8 @@ function modifyQuantity() {
   for (let j = 0; j < productQuantity.length; j++) {
     productQuantity[j].addEventListener('change', (event) => {
     event.preventDefault();
+
     // sélection de la nouvelle quantité...
-    // ... qu'on va sauvegarder dans un nouveau tableau
-   // avec les autres éléments du localStorage
     let productNewQuantity = productQuantity[j].value;
     const newLocalStorage = {
       id: productInLocalStorage[j].id,
@@ -75,12 +74,11 @@ function modifyQuantity() {
       quantity: productNewQuantity, // avec la nouvelle quantité souhaitée
     };
 
-    // actualiser le localStorage avec les nouvelles données récupérées... 
+    // actualiser le localStorage 
     productInLocalStorage[j] = newLocalStorage;
-    // ...en transformant les Js en Json
     localStorage.setItem('product', JSON.stringify(productInLocalStorage));
 
-    // avertir de la modification et mettre à jour les totaux
+    // avertir la modification
     alert('Commande à jour.');
     totalArticles();
     priceAmount();
