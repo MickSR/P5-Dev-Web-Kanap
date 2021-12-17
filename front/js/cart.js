@@ -4,7 +4,7 @@ let productInLocalStorage = JSON.parse(localStorage.getItem('product'));
 
 // AFFICHER LES PRODUITS DU PANIER
 
- // je sélectionne la partie html concernée par la modification
+ // je sélectionne la partie html concernée
  let cartAndFormContainer = document.getElementById('cartAndFormContainer');
 
  // si le panier est vide : afficher 'le panier est vide'
@@ -14,7 +14,7 @@ if(productInLocalStorage === null || productInLocalStorage == 0) {
     <p>Votre panier est vide !</p>
   </div>`;
 }
-// si le panier n'est pas vide : afficher les produits dans le localStorage
+// sinon afficher les produits dans le localStorage
 else{
   let itemCards = [];
  
@@ -48,6 +48,7 @@ else{
   </article>
     `;
   }
+  
   if (i === productInLocalStorage.length) {
   const itemCart = document.getElementById('cart__items');
   itemCart.innerHTML += itemCards;
@@ -62,7 +63,7 @@ function modifyQuantity() {
     productQuantity[j].addEventListener('change', (event) => {
     event.preventDefault();
 
-    // sélection de la nouvelle quantité...
+    //nouvelle quantité...
     let productNewQuantity = productQuantity[j].value;
     const newLocalStorage = {
       id: productInLocalStorage[j].id,
@@ -71,7 +72,7 @@ function modifyQuantity() {
       name: productInLocalStorage[j].name,
       color: productInLocalStorage[j].color,
       price: productInLocalStorage[j].price,   
-      quantity: productNewQuantity, // avec la nouvelle quantité souhaitée
+      quantity: productNewQuantity,
     };
 
     // actualiser le localStorage 
