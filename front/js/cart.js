@@ -22,8 +22,7 @@ else{
   for (i = 0; i < productInLocalStorage.length; i++) {
   products.push(productInLocalStorage[i].id);
  
-  // le code suivant sera injecté à chaque tour de boucle
-  // selon la longueur des produits dans le local storage
+  // mise en place du code html
   itemCards = itemCards + `
     <article class="cart__item" data-id="${productInLocalStorage[i].id}" data-color="${productInLocalStorage.color}">
     <div class="cart__item__img">
@@ -81,7 +80,6 @@ function modifyQuantity() {
 
     // avertir la modification
     alert('Commande à jour.');
-    totalArticles();
     priceAmount();
       })
   }
