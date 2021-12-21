@@ -72,7 +72,7 @@ let addConfirm = () => {
 
 let update = false;
 
-//si il y a des produits et verification qu'il n'y a pas déjà les produits
+//si il y a des produits et verification qu'il n'y a pas les mêmes produits
 if (productInLocalStorage) {
  productInLocalStorage.forEach (function (productconfirmation, key) {
   if (productconfirmation.id == New && productconfirmation.color == selectColors.value) {
