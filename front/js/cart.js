@@ -80,6 +80,7 @@ function modifyQuantity() {
 
     // avertir la modification
     alert('Commande à jour.');
+    totalArticles();
     priceAmount();
       })
   }
