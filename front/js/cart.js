@@ -244,7 +244,6 @@ function postForm() {
 
   // j'envoie le formulaire + localStorage (sendFormData) 
   // ... que j'envoie au serveur
-
   const options = {
     method: 'POST',
     body: JSON.stringify(sendFormData),
