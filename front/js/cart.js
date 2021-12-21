@@ -18,7 +18,7 @@ if(productInLocalStorage === null || productInLocalStorage == 0) {
 else{
   let itemCards = [];
  
-  // expression initiale; condition; incrémentation
+  // expression initiale
   for (i = 0; i < productInLocalStorage.length; i++) {
   products.push(productInLocalStorage[i].id);
  
