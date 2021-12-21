@@ -75,7 +75,7 @@ let update = false;
 //si il y a des produits et verification qu'il n'y a pas les mêmes produits
 if (productInLocalStorage) {
  productInLocalStorage.forEach (function (productconfirmation, key) {
-  if (productconfirmation.id == New && productconfirmation.color == selectColors.value) {
+  if (productconfirmation.id === New && productconfirmation.color === selectColors.value) {
     productInLocalStorage[key].quantity = parseInt(productconfirmation.quantity) + parseInt(selectQuantity.value);
     localStorage.setItem('product', JSON.stringify(productInLocalStorage));
     update = true;
