@@ -6,7 +6,7 @@ console.log(productInLocalStorage)
 // AFFICHER LES PRODUITS DU PANIER
 
  // je sélectionne la partie html concernée
- let cartAndFormContainer = document.getElementById('cartAndFormContainer');
+ const cartAndFormContainer = document.getElementById('cartAndFormContainer');
 
  // si le panier est vide : afficher 'le panier est vide'
  if(productInLocalStorage === null || productInLocalStorage == 0) {
@@ -17,7 +17,8 @@ console.log(productInLocalStorage)
 }
 // sinon afficher les produits dans le localStorage
 else{
-  let itemCards = [];
+
+  let itemCards = "";
  
   // expression initiale
   for (a = 0; a < productInLocalStorage.length; a++) {
@@ -47,17 +48,15 @@ else{
     </div>
   </article>
     `;
-  }
-  
-  if (a === productInLocalStorage.length) {
+
   const itemCart = document.getElementById('cart__items');
-  itemCart.innerHTML += itemCards;
+  itemCart.innerHTML = itemCards;
   }
 
 // je modifie la quantité dans le panier
 function modifyQuantity() {
 
-  let productQuantity = document.querySelectorAll('.itemQuantity');
+  const productQuantity = document.querySelectorAll('.itemQuantity');
 
   for (let b = 0; b < productQuantity.length; b++) {
     productQuantity[b].addEventListener('change', (event) => {
@@ -101,7 +100,6 @@ function deleteArticle() {
     let deleteColor = productInLocalStorage[c].color;
 
     // filtrer l'élément cliqué par le bouton supprimer
-    // en respectant les conditions du callback
     productInLocalStorage = productInLocalStorage.filter( element => element.id !== deleteId || element.color !== deleteColor);
       
     // envoyer les nouvelles données dans le localStorage
@@ -141,7 +139,6 @@ function priceAmount() {
     calculPrice.push(cartAmount);
 
     // la fonction reduce() permet de garder en mémoire les résultats de l'opération
-    // elle fonctionne comme une boucle, avec un accumulateur et la valeur courante
     const reduce = (previousValue, currentValue) => previousValue + currentValue;
     total = calculPrice.reduce(reduce);
   }
@@ -235,15 +232,13 @@ function postForm() {
   }
   validControl()
 
-  // je mets les valeurs du formulaire et les produits sélectionnés
-  // dans un objet...
+  // je mets les valeurs du formulaire et les produits sélectionnés dans une variable
   const sendFormData = {
     contact,
     products,
   }
 
-  // j'envoie le formulaire + localStorage (sendFormData) 
-  // ... que j'envoie au serveur
+  // j'envoie le formulaire + localStorage (sendFormData) au serveur
   const options = {
     method: 'POST',
     body: JSON.stringify(sendFormData),
