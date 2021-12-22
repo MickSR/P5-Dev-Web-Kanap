@@ -28,7 +28,7 @@ fetch("http://localhost:3000/api/products/" + New)
     })
 
     .catch((error) => { 
-        console.error("Erreur");
+      console.error({"error": error})
     })
 
 //mettre en place l'ajout panier avec les variables
