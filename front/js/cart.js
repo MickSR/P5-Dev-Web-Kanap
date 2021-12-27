@@ -124,7 +124,7 @@ function totalArticles() {
     // attribuer la valeur retournée par parseInt à la variable totalItems
     totalItems += newQuantity;
   }
-    // attribuer à #totalQuantité la valeur de totalItems et l'afficher dans le DOM
+    // attribuer à totalQuantity la valeur de totalItems et l'afficher dans le DOM
     const totalQuantity = document.getElementById('totalQuantity');
     totalQuantity.textContent = totalItems;
 }
