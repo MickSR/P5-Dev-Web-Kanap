@@ -9,7 +9,7 @@ console.log(productInLocalStorage)
  const cartAndFormContainer = document.getElementById('cartAndFormContainer');
 
  // si le panier est vide : afficher 'le panier est vide'
- if(productInLocalStorage === null || productInLocalStorage == 0) {
+ if(productInLocalStorage === null || productInLocalStorage.length <= 0) {
   document.querySelector("#cart__items").innerHTML =`
   <div class="cart__empty">
     <p>Votre panier est vide !</p>
@@ -18,28 +18,30 @@ console.log(productInLocalStorage)
 // sinon afficher les produits dans le localStorage
 else{
 
-  let itemCards = "";
+  const itemCart = document.getElementById('cart__items');
  
   // expression initiale
-  for (a = 0; a < productInLocalStorage.length; a++) {
-  products.push(productInLocalStorage[a].id);
+  for (i = 0; i < productInLocalStorage.length; i++) {
+  products.push(productInLocalStorage[i].id);
  
+  if (itemCart){
+  
   // mise en place du code html
-  itemCards = itemCards + `
-    <article class="cart__item" data-id="${productInLocalStorage[a].id}" data-color="${productInLocalStorage.color}">
+  itemCart.innerHTML += `
+    <article class="cart__item" data-id="${productInLocalStorage[i].id}" data-color="${productInLocalStorage.color}">
     <div class="cart__item__img">
-      <img src="${productInLocalStorage[a].image}" alt="${productInLocalStorage[a].alt}">
+      <img src="${productInLocalStorage[i].image}" alt="${productInLocalStorage[i].alt}">
     </div>
     <div class="cart__item__content">
       <div class="cart__item__content__titlePrice">
-        <h2>${productInLocalStorage[a].name}</h2>
-        <p>${productInLocalStorage[a].color}</p>
-        <p>${productInLocalStorage[a].price} €</p>
+        <h2>${productInLocalStorage[i].name}</h2>
+        <p>${productInLocalStorage[i].color}</p>
+        <p>${productInLocalStorage[i].price} €</p>
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
           <p>Qté : </p>
-          <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productInLocalStorage[a].quantity}">
+          <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productInLocalStorage[i].quantity}">
         </div>
         <div class="cart__item__content__settings__delete">
           <p class="deleteItem">Supprimer</p>
@@ -48,29 +50,27 @@ else{
     </div>
   </article>
     `;
-
-  const itemCart = document.getElementById('cart__items');
-  itemCart.innerHTML = itemCards;
   }
+}
 
 // je modifie la quantité dans le panier
 function modifyQuantity() {
 
   const productQuantity = document.querySelectorAll('.itemQuantity');
 
-  for (let b = 0; b < productQuantity.length; b++) {
-    productQuantity[b].addEventListener('change', (event) => {
+  for (let i = 0; i < productQuantity.length; i++) {
+    productQuantity[i].addEventListener('change', (event) => {
     event.preventDefault();
 
     //nouvelle quantité...
-    let productNewQuantity = productQuantity[b].value;
+    let productNewQuantity = productQuantity[i].value;
     const newLocalStorage = {
-      id: productInLocalStorage[b].id,
-      image: productInLocalStorage[b].image,
-      alt: productInLocalStorage[b].alt,
-      name: productInLocalStorage[b].name,
-      color: productInLocalStorage[b].color,
-      price: productInLocalStorage[b].price,   
+      id: productInLocalStorage[i].id,
+      image: productInLocalStorage[i].image,
+      alt: productInLocalStorage[i].alt,
+      name: productInLocalStorage[i].name,
+      color: productInLocalStorage[i].color,
+      price: productInLocalStorage[i].price,   
       quantity: productNewQuantity,
     };
 
@@ -91,8 +91,8 @@ modifyQuantity();
 function deleteArticle() {
   const deleteItem = document.querySelectorAll('.deleteItem');
 
-  for (let c = 0; c < deleteItem.length; c++) { 
-    deleteItem[c].addEventListener('click', (event) => {
+  for (let i = 0; i < deleteItem.length; i++) { 
+    deleteItem[i].addEventListener('click', (event) => {
     event.preventDefault();
 
     // enregistrer l'id et la couleur séléctionnés par le bouton supprimer
@@ -116,18 +116,19 @@ deleteArticle();
 // j'affiche le total des articles dans le panier
 function totalArticles() {
   let totalItems = 0;
-  for (d in productInLocalStorage) {
-    // analyser et convertir la valeur 'quantité' dans le localstorage en une chaîne
-    // et renvoie un entier (parseInteger), sur la base décimale de 10
-    const newQuantity = parseInt(productInLocalStorage[d].quantity, 10);
+  for (i in productInLocalStorage) {
+    
+    // renvoie un entier (parseInteger), sur la base décimale de 10
+    const newQuantity = parseInt(productInLocalStorage[i].quantity, 10);
 
     // attribuer la valeur retournée par parseInt à la variable totalItems
     totalItems += newQuantity;
   }
     // attribuer à totalQuantity la valeur de totalItems et l'afficher dans le DOM
     const totalQuantity = document.getElementById('totalQuantity');
+    if (totalQuantity) {
     totalQuantity.textContent = totalItems;
-}
+}}
 totalArticles();
 
 // je calcule le montant total du panier
@@ -143,17 +144,19 @@ function priceAmount() {
     total = calculPrice.reduce(reduce);
   }
   const totalPrice = document.getElementById('totalPrice');
+  if (totalPrice) {
   totalPrice.textContent = total;
-}
+}}
 priceAmount();
 } 
 
 // j'envoie le formulaire dans le serveur
 function postForm() {
   const order = document.getElementById('order');
+  if (order) {
   order.addEventListener('click', (event) => {
   event.preventDefault();
-
+  
   // je récupère les données du formulaire dans un objet
   const contact = {
     firstName : document.getElementById('firstName').value,
@@ -167,8 +170,8 @@ function postForm() {
   // vérifier la validation des entrées
   // contrôle prénom
   function controlFirstName() {
-    const validFirstName = contact.firstName;
-    if (/^[a-z ,.'-]+$/.test(validFirstName)) {
+    const validFirstName = (/^[a-z ,.'-]+$/.test(contact.firstName))
+    if (validFirstName) {
       return true;
     } else {
       let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
@@ -248,14 +251,22 @@ function postForm() {
   };
 
   fetch("http://localhost:3000/api/products/order", options)
-    .then(response => response.json())
+    .then(response =>response.json())
     .then(data => {
+      console.log("data",data)
       localStorage.setItem('orderId', data.orderId);
         if (validControl()) {
           document.location.href = 'confirmation.html?id='+ data.orderId;
+
         }
     });
-
 }) 
-}
+}}
 postForm();
+
+function checkout(){
+  const orderId = document.getElementById('orderId');
+  if (orderId) {
+  orderId.innerHTML = localStorage.getItem('orderId');
+}}
+checkout();
