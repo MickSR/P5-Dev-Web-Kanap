@@ -269,3 +269,4 @@ function checkout(){
   if (orderId) {
   orderId.innerHTML = localStorage.getItem('orderId');
 }}
+checkout();
