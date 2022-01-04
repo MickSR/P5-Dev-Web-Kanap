@@ -75,7 +75,7 @@ function modifyQuantity() {
     };
 
     // actualiser le localStorage 
-    productInLocalStorage[b] = newLocalStorage;
+    productInLocalStorage[i] = newLocalStorage;
     localStorage.setItem('product', JSON.stringify(productInLocalStorage));
 
     // avertir la modification
