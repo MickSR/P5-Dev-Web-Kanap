@@ -96,8 +96,8 @@ function deleteArticle() {
     event.preventDefault();
 
     // enregistrer l'id et la couleur séléctionnés par le bouton supprimer
-    let deleteId = productInLocalStorage[c].id;
-    let deleteColor = productInLocalStorage[c].color;
+    let deleteId = productInLocalStorage[i].id;
+    let deleteColor = productInLocalStorage[i].color;
 
     // filtrer l'élément cliqué par le bouton supprimer
     productInLocalStorage = productInLocalStorage.filter( element => element.id !== deleteId || element.color !== deleteColor);
