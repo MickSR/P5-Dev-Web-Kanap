@@ -12,9 +12,7 @@
 
     // "product" => élément "res" => itérable
         for (product of res) { 
-        console.log("Product")
-
-      
+  
         //.innerHTML +=`` le "+" pour ajouter le contenus tant qu'il y en a .
         //je récupère dans le html à partir de la ligne 52 qu'on remplace par une chaîne de caractère (texte dans une variable)
             const item = document.getElementById('items').innerHTML +=` 

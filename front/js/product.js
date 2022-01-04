@@ -1,7 +1,6 @@
 // il faut que je redirige l'API sur cette page
 let params = new URL(window.location.href).searchParams;
 let New = params.get('id');
-console.log(New);
 
 // mise en place de mes variables
 const image = document.getElementsByClassName('item__img');
@@ -10,7 +9,8 @@ const price = document.getElementById('price');
 const description = document.getElementById('description');
 const colors = document.getElementById('colors');
 
-fetch("http://localhost:3000/api/products/" + New)
+function productDescription() {
+  fetch("http://localhost:3000/api/products/" + New)
     .then(res => res.json())
     .then(product => {
         //je combines mes variables avec chaque produits
@@ -22,6 +22,7 @@ fetch("http://localhost:3000/api/products/" + New)
         description.innerHTML = `${product.description}`;
     
     // mise en place des choix de couleurs
+  
     for (number in product.colors) {
         colors.options[colors.options.length] = new Option(product.colors[number]);
         }
@@ -30,6 +31,8 @@ fetch("http://localhost:3000/api/products/" + New)
     .catch((error) => { 
       console.error({"error": error})
     })
+  }
+  productDescription ();
 
 //mettre en place l'ajout panier avec les variables
 const selectQuantity = document.getElementById('quantity');
@@ -39,6 +42,7 @@ let imageURL = "";
 let altTxt = "";
 
 // je configure un eventListener quand l'utilisateur clique sur ajouter au panier
+function addCart() {
 addToCart.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -66,7 +70,7 @@ productInLocalStorage.push(selection);
 localStorage.setItem('product', JSON.stringify(productInLocalStorage));
 }
 
-let addConfirm = () => {
+const addConfirm = () => {
   alert('Votre produit a bien été ajouté');
 }
 
@@ -95,3 +99,5 @@ else {
   addConfirm();
 }
 });
+}
+addCart();

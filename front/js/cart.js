@@ -1,7 +1,6 @@
 // RECUPERER LES PRODUITS STOCKES DANS LE LOCALSTORAGE   //
 let products = [];
 let productInLocalStorage = JSON.parse(localStorage.getItem('product'));
-console.log(productInLocalStorage)
 
 // AFFICHER LES PRODUITS DU PANIER
 
@@ -9,11 +8,11 @@ console.log(productInLocalStorage)
  const cartAndFormContainer = document.getElementById('cartAndFormContainer');
 
  // si le panier est vide : afficher 'le panier est vide'
- if(productInLocalStorage === null || productInLocalStorage.length <= 0) {
-  document.querySelector("#cart__items").innerHTML =`
-  <div class="cart__empty">
+  if(productInLocalStorage === null || productInLocalStorage.length <= 0) {
+    document.querySelector("#cart__items").innerHTML =`
+    <div class="cart__empty">
     <p>Votre panier est vide !</p>
-  </div>`;
+    </div>`;
 }
 // sinon afficher les produits dans le localStorage
 else{
@@ -21,6 +20,7 @@ else{
   const itemCart = document.getElementById('cart__items');
  
   // expression initiale
+  function Content() {
   for (i = 0; i < productInLocalStorage.length; i++) {
   products.push(productInLocalStorage[i].id);
  
@@ -50,8 +50,9 @@ else{
     </div>
   </article>
     `;
-  }
-}
+  } 
+}}
+Content();
 
 // je modifie la quantité dans le panier
 function modifyQuantity() {
@@ -96,8 +97,8 @@ function deleteArticle() {
     event.preventDefault();
 
     // enregistrer l'id et la couleur séléctionnés par le bouton supprimer
-    let deleteId = productInLocalStorage[i].id;
-    let deleteColor = productInLocalStorage[i].color;
+   const deleteId = productInLocalStorage[i].id;
+   const deleteColor = productInLocalStorage[i].color;
 
     // filtrer l'élément cliqué par le bouton supprimer
     productInLocalStorage = productInLocalStorage.filter( element => element.id !== deleteId || element.color !== deleteColor);
@@ -134,9 +135,9 @@ totalArticles();
 // je calcule le montant total du panier
 function priceAmount() {
   const calculPrice = [];
-  for (e = 0; e < productInLocalStorage.length; e++) {
+  for (i = 0; i < productInLocalStorage.length; i++) {
     // prix de l'article quantité * prix
-    const cartAmount = productInLocalStorage[e].price * productInLocalStorage[e].quantity;
+    const cartAmount = productInLocalStorage[i].price * productInLocalStorage[i].quantity;
     calculPrice.push(cartAmount);
 
     // la fonction reduce() permet de garder en mémoire les résultats de l'opération
@@ -253,7 +254,6 @@ function postForm() {
   fetch("http://localhost:3000/api/products/order", options)
     .then(response =>response.json())
     .then(data => {
-      console.log("data",data)
       localStorage.setItem('orderId', data.orderId);
         if (validControl()) {
           document.location.href = 'confirmation.html?id='+ data.orderId;
